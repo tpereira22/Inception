@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    restart: always
+    ports:
+      - "443:443"
+    depends_on:
+      - mariadb
+    networks:
+      - inception
+
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    restart: always
+    ports:
+      - "3306:3306"
+    networks:
+      - inception
+
+networks:
+  inception:
+    driver: bridge
+  
