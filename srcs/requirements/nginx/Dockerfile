@@ -1,14 +1,14 @@
 FROM debian:bullseye
 
-RUN apt update && \
+RUN apt-get update && \
     apt-get upgrade -y && \
-    apt install nginx -y && \
-    apt install openssl -y
+    apt-get install nginx -y && \
+    apt-get install openssl -y
 
 
 RUN mkdir -p /etc/nginx/ssl
 
-COPY ./conf/nginx.conf /etc/nginx/sites-available/default
+COPY ./conf/nginx.conf /etc/nginx/nginx.conf 
 
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \ 
     -keyout /etc/ssl/private/privatekey.key \

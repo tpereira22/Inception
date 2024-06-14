@@ -11,8 +11,20 @@ down	: wait
 	@echo "\e[1;31m -> SHUTTING DOWN SERVER <- \e[0m"
 	@docker-compose -f ./srcs/docker-compose.yaml down
 
-# downv	:
-# 	@docker compose -f ./srcs/docker-compose.yaml down -v
+downv:
+	@read -p "Are you sure? This command will delete the volumes (y/n) " answer; \
+	if [ "$$answer" != "y" ]; then \
+		echo "Aborted."; \
+	else \
+		echo "\e[1;31m -> SHUTTING DOWN SERVER <- \e[0m"; \
+		echo "\e[1;31m ->  DELETING VOLUMES <- \e[0m"; \
+		docker-compose -f ./srcs/docker-compose.yaml down -v; \
+	fi
+
+fullremove: downv
+	@docker rmi srcs-nginx
+	@docker rmi srcs-wordpress
+	@docker rmi srcs-mariadb
 
 wait	:
 	@echo "."
