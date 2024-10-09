@@ -1,7 +1,6 @@
-version: "3.8"
-
 services:
   nginx:
+    image: nginx
     container_name: nginx
     build: ./requirements/nginx
     restart: always
@@ -14,8 +13,21 @@ services:
       - wordpress
     networks:
       - inception
+  
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    build: ./requirements/mariadb
+    restart: always
+    volumes:
+      - vMariaDb:/var/lib/mysql
+    env_file:
+      - .env
+    networks:
+      - inception
 
   wordpress:
+    image: wordpress
     container_name: wordpress
     build: ./requirements/wordpress
     restart: always
@@ -24,22 +36,9 @@ services:
     env_file:
       - .env
     ports:
-     - "9000:9000"
+      - "9000:9000"
     depends_on:
       - mariadb
-    networks:
-      - inception
-  
-  mariadb:
-    container_name: mariadb
-    build: ./requirements/mariadb
-    restart: always
-    volumes:
-      - vMariaDb:/var/lib/mysql
-    env_file:
-      - .env
-    ports:
-      - "3306:3306"
     networks:
       - inception
 
