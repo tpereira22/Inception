@@ -1,27 +1,20 @@
 FROM debian:bullseye
 
+# Update and install packages
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y \
-        iputils-ping \
-        curl \
-        wget \
-        unzip \
-        php7.4 \
-        php7.4-fpm \
-        php7.4-mysql \
-        php7.4-gd \
-        php7.4-curl \
-        php7.4-xml \
-        php7.4-mbstring && \
-    mkdir -p /var/www/html && \
-    mkdir -p /run/php
+    apt-get install -y iputils-ping && \
+    apt-get install -y php-fpm php-mysql php-gd php-curl php-xml && \
+    apt-get install -y curl && \
+    mkdir -p /var/www/html
 
-
+# Copy the initialization script
 COPY ./conf/init_script.sh /
 
+COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+
+# Make the script executable
 RUN chmod +x /init_script.sh
 
-EXPOSE 9000
-
-ENTRYPOINT ["./init_script.sh"]
+# Set the entry point
+ENTRYPOINT ["/init_script.sh"]
