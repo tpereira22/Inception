@@ -7,7 +7,7 @@ mkdir -p /run/php
 sleep 15
 
 # # Change the PHP-FPM pool configuration to listen on port 9000
-# sed -i 's|^listen =.*|listen = 9000|' /etc/php/7.4/fpm/pool.d/www.conf
+sed -i 's|^listen =.*|listen = 9000|' /etc/php/7.4/fpm/pool.d/www.conf
 
 cd /var/www/html
 
