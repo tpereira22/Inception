@@ -21,9 +21,6 @@ downv:
 		docker-compose -f ./srcs/docker-compose.yaml down -v; \
 	fi
 
-fullremove: downv
-	@docker-compose -f ./srcs/docker-compose.yaml down --rmi all
-
 clean:
 	@docker stop $$(docker ps -qa);\
 	docker rm $$(docker ps -qa);\
