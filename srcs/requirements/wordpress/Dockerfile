@@ -1,6 +1,5 @@
 FROM debian:bullseye
 
-# Update and install packages
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y iputils-ping && \
@@ -8,11 +7,8 @@ RUN apt-get update && \
     apt-get install -y curl && \
     mkdir -p /var/www/html
 
-# Copy the initialization script
 COPY ./conf/init_script.sh /
 
-# Make the script executable
 RUN chmod +x /init_script.sh
 
-# Set the entry point
 ENTRYPOINT ["./init_script.sh"]
